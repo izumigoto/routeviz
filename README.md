@@ -1,5 +1,5 @@
 
-<p align="center"><img src="https://github.com/NebulaTris/ADA/assets/94922914/48a95784-f081-4008-b332-4b2c975860d0" height = "256" ></img></p>
+<p align="center"><img src="routeviz.png" height = "256" ></img></p>
 <p align="center">
 
 RouteViz is a repository that provides visualizations of various pathfinding algorithms implemented in both C++ with SFML and JavaScript. This project aims to help users understand and compare the performance of different pathfinding algorithms.
