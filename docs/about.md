@@ -36,7 +36,7 @@ Dijkstra's Algorithm is a single-source shortest path algorithm that works on we
 - Inefficient on large graphs due to its time complexity.
 - Does not account for real-time traffic updates.
 
-## 2. A* Algorithm
+## 2. Bellman-Ford
 
 ### Overview:
 The A* Algorithm is a combination of Dijkstra's Algorithm and a heuristic approach. It's designed to find the shortest path in weighted graphs. The heuristic guides the algorithm by providing an estimate of the cost from the current node to the destination.
@@ -73,7 +73,7 @@ The A* Algorithm is a combination of Dijkstra's Algorithm and a heuristic approa
 ### Weaknesses:
 - Requires an admissible heuristic for optimality.
 
-## 3. Breadth-First Search (BFS)
+## 3. Floyd Warshall
 
 ### Overview:
 Breadth-First Search (BFS) is an uninformed search algorithm that explores all nodes at a certain depth level before moving deeper into the graph. It's primarily used for unweighted graphs.

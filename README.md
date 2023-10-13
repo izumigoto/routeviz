@@ -8,7 +8,7 @@ RouteViz is a repository that provides visualizations of various pathfinding alg
 
 - **Interactive Visualizations**: RouteViz offers interactive visual representations of pathfinding algorithms, allowing users to see how the algorithms navigate through different scenarios.
 
-- **Multiple Algorithms**: The repository includes implementations of popular pathfinding algorithms like Dijkstra's Algorithm, A* Algorithm and Breadth-First Search (BFS).
+- **Multiple Algorithms**: The repository includes implementations of popular pathfinding algorithms like Dijkstra's Algorithm, Bellman-Ford and Floyd Warshall.
 
 - **C++ with SFML**: The C++ version of RouteViz uses SFML for graphics rendering, providing a smooth and visually appealing experience.
 

@@ -1,8 +1,8 @@
-# Case Study: Dijkstra's Algorithm, A* Algorithm, and Breadth-First Search (BFS)
+# Case Study: Dijkstra's Algorithm, Bellman-Ford and Floyd Warshall.
 
 ## Introduction
 
-Pathfinding algorithms play a crucial role in various fields, from logistics and robotics to video games and route planning. In this case study, we will explore and compare three popular pathfinding algorithms: Dijkstra's Algorithm, A* Algorithm, and Breadth-First Search (BFS). We will analyze their strengths, weaknesses, and real-world applications.
+Pathfinding algorithms play a crucial role in various fields, from logistics and robotics to video games and route planning. In this case study, we will explore and compare three popular pathfinding algorithms: Dijkstra's Algorithm, Bellman-Ford and Floyd Warshall. We will analyze their strengths, weaknesses, and real-world applications.
 
 ## 1. Dijkstra's Algorithm
 
@@ -23,7 +23,7 @@ Dijkstra's Algorithm is a weighted graph search algorithm that finds the shortes
 ### Weaknesses
 - Inefficient for large graphs due to its time complexity.
 
-## 2. A* Algorithm
+## 2. Bellman-Ford
 
 ### Overview
 A* Algorithm is an informed search algorithm that combines elements of Dijkstra's Algorithm and a heuristic to prioritize nodes. It evaluates nodes based on a cost function that includes the actual cost from the start and a heuristic estimate to the goal.
@@ -42,7 +42,7 @@ A* Algorithm is an informed search algorithm that combines elements of Dijkstra'
 ### Weaknesses
 - The quality of the heuristic greatly impacts the algorithm's performance.
 
-## 3. Breadth-First Search (BFS)
+## 3. Floyd Warshall
 
 ### Overview
 BFS is an unweighted graph search algorithm that explores all the vertices in a graph from a given source vertex. It traverses the graph level by level, ensuring that it finds the shortest path in unweighted graphs.
