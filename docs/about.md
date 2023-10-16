@@ -1,104 +1,88 @@
-## 1. Dijkstra's Algorithm
+## Dijkstra's Algorithm:
 
 ### Overview:
-Dijkstra's Algorithm is a single-source shortest path algorithm that works on weighted graphs. It was developed by Edsger W. Dijkstra in 1956. The algorithm aims to find the shortest path from a specified starting node to all other nodes in the graph.
+Dijkstra's Algorithm is a single-source shortest path algorithm. It finds the shortest path from a specified starting node to all other nodes in a weighted, directed or undirected graph.
 
-### Algorithm Steps:
-1. **Initialization**:
-   - Assign a tentative distance value to every node. Set it to zero for the initial node and to infinity for all other nodes.
-   - Set the initial node as the current node.
+### Key Concepts:
+1. **Greedy Approach:** Dijkstra's Algorithm uses a greedy approach by selecting the node with the smallest distance (or cost) at each step.
 
-2. **Visit Neighbors**:
-   - For the current node, consider all of its neighbors (nodes it can directly reach). Calculate their tentative distances from the initial node.
+2. **Priority Queue:** It maintains a priority queue to efficiently select the node with the smallest distance.
 
-3. **Update Distances**:
-   - Compare the newly calculated tentative distance to the current assigned value. Assign the smaller one.
-   
-4. **Mark as Visited**:
-   - Once all of the neighbors have been visited, mark the current node as visited.
+3. **Visited Nodes:** It keeps track of visited nodes to avoid revisiting them.
 
-5. **Select Next Node**:
-   - A visited node with the smallest tentative distance becomes the next "current node." Repeat steps 2 through 4.
+4. **Relaxation:** Dijkstra's Algorithm iteratively relaxes the edges, updating the distance to each neighboring node if a shorter path is found.
 
-6. **Termination**:
-   - The algorithm terminates when the destination node has been marked visited or if the smallest tentative distance among the nodes is infinity (indicating that the destination is not reachable).
 
 ### Use Cases:
-- GPS navigation systems to find the shortest path between two points on a road network.
-- Network routing protocols for determining the best path for data packets.
-- Optimization problems where finding the shortest path is crucial.
+- Finding the shortest path in computer networks, such as routing packets.
+- Solving the "traveling salesman problem" in certain scenarios.
 
-### Strengths:
-- Guarantees finding the shortest path in weighted graphs.
-- Applicable when accurate distances are available.
+### Time Complexity:
+- With a binary heap: O((V + E) log V)
+- With a Fibonacci heap: O(V log V + E)
 
-### Weaknesses:
-- Inefficient on large graphs due to its time complexity.
-- Does not account for real-time traffic updates.
+---
 
-## 2. Bellman-Ford
+## Bellman-Ford Algorithm:
 
 ### Overview:
-The A* Algorithm is a combination of Dijkstra's Algorithm and a heuristic approach. It's designed to find the shortest path in weighted graphs. The heuristic guides the algorithm by providing an estimate of the cost from the current node to the destination.
+Bellman-Ford is a single-source shortest path algorithm that can handle negative weight edges. It detects negative weight cycles and returns an error if one is found.
 
-### Algorithm Steps:
-1. **Initialization**:
-   - Assign a tentative distance value to every node. Set it to zero for the initial node and to infinity for all other nodes.
-   - Set the initial node as the current node.
+### Key Concepts:
+1. **Dynamic Programming:** It uses a dynamic programming approach to find the shortest paths.
 
-2. **Visit Neighbors**:
-   - For the current node, consider all of its neighbors. Calculate their tentative distances from the initial node, using both the actual cost and the heuristic.
+2. **Iterative Relaxation:** Bellman-Ford performs V-1 iterations (where V is the number of vertices) and relaxes all edges in each iteration.
 
-3. **Update Distances**:
-   - Compare the newly calculated tentative distance to the current assigned value. Assign the smaller one.
-
-4. **Mark as Visited**:
-   - Once all of the neighbors have been visited, mark the current node as visited.
-
-5. **Select Next Node**:
-   - A visited node with the smallest tentative distance plus heuristic becomes the next "current node." Repeat steps 2 through 4.
-
-6. **Termination**:
-   - The algorithm terminates when the destination node has been marked visited or if the smallest tentative distance among the nodes is infinity (indicating that the destination is not reachable).
+3. **Checking for Negative Cycles:** After V-1 iterations, it performs one more iteration to check for negative cycles. If a shorter path is found, it means there's a negative cycle.
 
 ### Use Cases:
-- GPS navigation systems considering factors like traffic conditions, road types, and historical data.
-- Video games for pathfinding AI.
-- Robotics for efficient movement in constrained environments.
+- Handling scenarios where negative weights are possible, such as financial transactions (with debt).
+- Network routing where negative costs could represent benefits (like toll discounts).
 
-### Strengths:
-- Efficient on both weighted and unweighted graphs.
-- Provides an optimal path with the right heuristic.
+### Time Complexity:
+- O(V * E) - where V is the number of vertices and E is the number of edges.
 
-### Weaknesses:
-- Requires an admissible heuristic for optimality.
+---
 
-## 3. Floyd Warshall
+## Floyd-Warshall Algorithm:
 
 ### Overview:
-Breadth-First Search (BFS) is an uninformed search algorithm that explores all nodes at a certain depth level before moving deeper into the graph. It's primarily used for unweighted graphs.
+Floyd-Warshall is an all-pairs shortest path algorithm. It finds the shortest paths between all pairs of nodes in a weighted directed or undirected graph.
 
-### Algorithm Steps:
-1. **Initialization**:
-   - Enqueue the initial node and mark it as visited.
+### Key Concepts:
+1. **Dynamic Programming:** Like Bellman-Ford, it uses dynamic programming to find shortest paths.
 
-2. **Explore Neighbors**:
-   - Dequeue a node and examine its unvisited neighbors.
+2. **Iterative Approach:** Floyd-Warshall iterates through all pairs of nodes, considering each node as a possible intermediate node.
 
-3. **Visit and Enqueue**:
-   - Visit each neighbor and enqueue it if it hasn't been visited yet. Mark it as visited.
-
-4. **Continue Exploration**:
-   - Continue this process until all reachable nodes have been visited.
+3. **Matrix Representation:** It uses a matrix to store distances between nodes and updates the matrix in each iteration.
 
 ### Use Cases:
-- Shortest path in unweighted graphs.
-- Network broadcasting to reach all nodes in a network.
+- Calculating distances in transportation networks.
+- Analyzing social networks for metrics like network diameter.
 
-### Strengths:
-- Guarantees finding the shortest path on unweighted graphs.
-- Practical for scenarios with all edges having equal weight.
+### Time Complexity:
+- O(V^3) - where V is the number of vertices.
 
-### Weaknesses:
-- Inefficient on weighted graphs.
-- May not be practical for large-scale applications.
+---
+
+## Comparison:
+
+### Applicability:
+- Dijkstra's is for single-source shortest path.
+- Bellman-Ford is for single-source shortest path with negative weights.
+- Floyd-Warshall is for all-pairs shortest path.
+
+### Negative Weights:
+- Dijkstra's and Floyd-Warshall do not handle negative weights (Dijkstra's can be modified with certain conditions).
+- Bellman-Ford can handle negative weights but is less efficient than Dijkstra's for positive weights.
+
+### Complexity:
+- Dijkstra's and Bellman-Ford have similar time complexity.
+- Floyd-Warshall has a higher time complexity but works for all pairs.
+
+### Suitable Situations:
+- Dijkstra's is suitable for most scenarios.
+- Bellman-Ford is suitable when there are negative weights (and no negative cycles).
+- Floyd-Warshall is suitable when you need to find all pairs of shortest paths.
+
+In summary, the choice of algorithm depends on the specific problem, the nature of the graph, and whether negative weights or all pairs of shortest paths are involved. Each algorithm has its strengths and use cases.

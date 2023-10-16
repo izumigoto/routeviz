@@ -21,7 +21,7 @@ Network routing plays a crucial role in various domains, including computer netw
 
 **Floyd-Warshall Algorithm:** Floyd-Warshall is less practical for optimizing routes for a single truck but can be valuable for overall network analysis and planning.
 
-# Scenario 3: Social Network Analysis
+## Scenario 3: Social Network Analysis
 **Problem:** A social media platform wants to identify the shortest paths between users for friend recommendations and to calculate the overall network diameter.
 
 **Dijkstra's Algorithm:** Dijkstra's Algorithm may not be the best choice for this scenario, as it focuses on single-source shortest paths. However, it can be used for finding connections within a user's immediate network.
