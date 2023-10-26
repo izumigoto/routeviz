@@ -1,6 +1,7 @@
 import time
 from typing import Callable
 
+from .search.astar import AStarSearch
 from .search.dijkstras import DijkstrasSearch
 from .models.grid import Grid
 from .models.solution import Solution
@@ -10,6 +11,7 @@ from .models.search_types import Search
 SearchFunction = Callable[[Grid], Solution]
 
 SEARCH: dict[Search, SearchFunction] = {
+    Search.ASTAR_SEARCH: AStarSearch.search,
     Search.DIJKSTRAS_SEARCH: DijkstrasSearch.search
 }
 
