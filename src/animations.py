@@ -1,8 +1,8 @@
-from typing import Callable, Optional
+from typing import Callable, Optional, DefaultDict
 from enum import Enum
 import math
 import pygame
-
+from collections import defaultdict
 
 from .constants import (
     DARK,
@@ -70,7 +70,7 @@ class Animator:
         self.maze: Maze = maze
 
         self.animating = False
-        self.nodes_to_animate: dict[tuple[int, int], list[AnimatingNode]] = {}
+        self.nodes_to_animate: DefaultDict[tuple[int, int], list[AnimatingNode]] = defaultdict(list)
         self.need_update = False
 
     def add_nodes_to_animate(
@@ -91,19 +91,11 @@ class Animator:
             last_node = list(self.nodes_to_animate.values())[-1][0]
             nodes[0].ticks = last_node.ticks + delay
 
-        self.nodes_to_animate[nodes[0].center] = self.nodes_to_animate.get(
-            nodes[0].center,
-            []
-        )
         self.nodes_to_animate[nodes[0].center].append(nodes[0])
 
         # Rest of the nodes
         for i in range(1, len(nodes)):
             nodes[i].ticks = nodes[i - 1].ticks + gap
-            self.nodes_to_animate[nodes[i].center] = self.nodes_to_animate.get(
-                nodes[i].center,
-                []
-            )
             self.nodes_to_animate[nodes[i].center].append(nodes[i])
 
         self.need_update = True
