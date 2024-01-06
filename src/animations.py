@@ -113,11 +113,10 @@ class Animator:
         """
         # Update starting time for animating nodes
         if self.need_update:
-            for center in self.nodes_to_animate:
-                for node in self.nodes_to_animate[center]:
-                    if not node.time_updated:
-                        node.ticks += (pygame.time.get_ticks() - node.start)
-                        node.time_updated = True
+            for (center, node) in self.nodes_to_animate.items():
+                if not node.time_updated:
+                    node.ticks += (pygame.time.get_ticks() - node.start)
+                    node.time_updated = True
 
             self.need_update = False
 
