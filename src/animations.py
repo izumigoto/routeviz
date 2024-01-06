@@ -1,8 +1,8 @@
-from typing import Callable, Optional
+from typing import Callable, Optional, DefaultDict
 from enum import Enum
 import math
 import pygame
-
+from collections import defaultdict
 
 from .constants import (
     DARK,
@@ -70,7 +70,7 @@ class Animator:
         self.maze: Maze = maze
 
         self.animating = False
-        self.nodes_to_animate: dict[tuple[int, int], list[AnimatingNode]] = {}
+        self.nodes_to_animate: DefaultDict[tuple[int, int], list[AnimatingNode]] = defaultdict(list)
         self.need_update = False
 
     def add_nodes_to_animate(
@@ -91,19 +91,11 @@ class Animator:
             last_node = list(self.nodes_to_animate.values())[-1][0]
             nodes[0].ticks = last_node.ticks + delay
 
-        self.nodes_to_animate[nodes[0].center] = self.nodes_to_animate.get(
-            nodes[0].center,
-            []
-        )
         self.nodes_to_animate[nodes[0].center].append(nodes[0])
 
         # Rest of the nodes
         for i in range(1, len(nodes)):
             nodes[i].ticks = nodes[i - 1].ticks + gap
-            self.nodes_to_animate[nodes[i].center] = self.nodes_to_animate.get(
-                nodes[i].center,
-                []
-            )
             self.nodes_to_animate[nodes[i].center].append(nodes[i])
 
         self.need_update = True
@@ -113,8 +105,8 @@ class Animator:
         """
         # Update starting time for animating nodes
         if self.need_update:
-            for center in self.nodes_to_animate:
-                for node in self.nodes_to_animate[center]:
+            for center, nodes in self.nodes_to_animate.items():
+                for node in nodes:
                     if not node.time_updated:
                         node.ticks += (pygame.time.get_ticks() - node.start)
                         node.time_updated = True
@@ -122,9 +114,9 @@ class Animator:
             self.need_update = False
 
         # Animate every node
-        for center in list(self.nodes_to_animate.keys()):
-            for i in range(len(self.nodes_to_animate[center]) - 1, -1, -1):
-                node = self.nodes_to_animate[center][i]
+        for center, nodes in self.nodes_to_animate.items():
+            for i in range(len(nodes) - 1, -1, -1):
+                node = nodes[i]
                 node.progress += pygame.time.get_ticks() - node.ticks
                 node.ticks = pygame.time.get_ticks()
 
@@ -260,51 +252,19 @@ class Animator:
         elif node.progress < 0.50 * node.duration:
             progress = node.progress
             duration = 0.50 * node.duration
-            r, g, b = node.colors[1]
-            r2, g2, b2 = node.colors[2]
 
-            r = self._ease_out_sine(
-                progress, r, r2 - r, duration
-            )
-            g = self._ease_out_sine(
-                progress, g, g2 - g, duration
-            )
-            b = self._ease_out_sine(
-                progress, b, b2 - b, duration
-            )
-            color = (round(r), round(g), round(b))
+            color = self._ease_out_sine_color(node.colors[1], node.colors[2])
+
         elif node.progress < 0.75 * node.duration:
             progress = node.progress - 0.50 * node.duration
             duration = 0.25 * node.duration
-            r, g, b = node.colors[2]
-            r2, g2, b2 = node.colors[3]
 
-            r = self._ease_out_sine(
-                progress, r, r2 - r, duration
-            )
-            g = self._ease_out_sine(
-                progress, g, g2 - g, duration
-            )
-            b = self._ease_out_sine(
-                progress, b, b2 - b, duration
-            )
-            color = (round(r), round(g), round(b))
+            color = self._ease_out_sine_color(node.colors[2], node.colors[3])
         else:
             progress = node.progress - 0.75 * node.duration
             duration = 0.25 * node.duration
-            r, g, b = node.colors[3]
-            r2, g2, b2 = node.colors[-1]
 
-            r = self._ease_out_sine(
-                progress, r, r2 - r, duration
-            )
-            g = self._ease_out_sine(
-                progress, g, g2 - g, duration
-            )
-            b = self._ease_out_sine(
-                progress, b, b2 - b, duration
-            )
-            color = (round(r), round(g), round(b))
+            color = self._ease_out_sine_color(node.colors[3], node.colors[-1])
 
         # Update size
         node.rect.width = node.rect.height = int(size)
@@ -322,6 +282,31 @@ class Animator:
                 border_radius=border_radius,
                 width=1
             )
+
+    def _ease_out_sine_color(
+        self,
+        time: float,
+        color_a: tuple[int, int, int],
+        color_b: tuple[int, int, int],
+        duration: float
+    ) -> tuple[int, int, int]:
+        """Calculate the current color
+
+        Args:
+            time (float): The current time of the animation.
+            color_a (tuple[int, int, int]): The starting color of the animation.
+            color_a (tuple[int, int, int]): The final color of the animation.
+            duration (float): The total duration of the animation in milliseconds.
+
+        Returns:
+            tuple[int, int, int]: Color at the current time.
+        """
+        return (
+            round(self._ease_out_sine(
+                progress, old, new - old, duration
+            ))
+            for old, new in zip(color_a, color_b)
+        )
 
     def _ease_out_sine(
         self,
