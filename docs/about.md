@@ -21,6 +21,8 @@ Dijkstra's Algorithm is a single-source shortest path algorithm. It finds the sh
 - With a binary heap: O((V + E) log V)
 - With a Fibonacci heap: O(V log V + E)
 
+## Diagram
+![Alt text](image.png)
 ---
 
 ## Bellman-Ford Algorithm:
@@ -42,6 +44,8 @@ Bellman-Ford is a single-source shortest path algorithm that can handle negative
 ### Time Complexity:
 - O(V * E) - where V is the number of vertices and E is the number of edges.
 
+## Diagram
+![Alt text](image-1.png)
 ---
 
 ## Floyd-Warshall Algorithm:
@@ -63,6 +67,8 @@ Floyd-Warshall is an all-pairs shortest path algorithm. It finds the shortest pa
 ### Time Complexity:
 - O(V^3) - where V is the number of vertices.
 
+## Diagram
+![Alt text](image-2.png)
 ---
 
 ## Comparison:
