@@ -260,51 +260,19 @@ class Animator:
         elif node.progress < 0.50 * node.duration:
             progress = node.progress
             duration = 0.50 * node.duration
-            r, g, b = node.colors[1]
-            r2, g2, b2 = node.colors[2]
 
-            r = self._ease_out_sine(
-                progress, r, r2 - r, duration
-            )
-            g = self._ease_out_sine(
-                progress, g, g2 - g, duration
-            )
-            b = self._ease_out_sine(
-                progress, b, b2 - b, duration
-            )
-            color = (round(r), round(g), round(b))
+            color = self._ease_out_sine_color(node.colors[1], node.colors[2])
+
         elif node.progress < 0.75 * node.duration:
             progress = node.progress - 0.50 * node.duration
             duration = 0.25 * node.duration
-            r, g, b = node.colors[2]
-            r2, g2, b2 = node.colors[3]
 
-            r = self._ease_out_sine(
-                progress, r, r2 - r, duration
-            )
-            g = self._ease_out_sine(
-                progress, g, g2 - g, duration
-            )
-            b = self._ease_out_sine(
-                progress, b, b2 - b, duration
-            )
-            color = (round(r), round(g), round(b))
+            color = self._ease_out_sine_color(node.colors[2], node.colors[3])
         else:
             progress = node.progress - 0.75 * node.duration
             duration = 0.25 * node.duration
-            r, g, b = node.colors[3]
-            r2, g2, b2 = node.colors[-1]
 
-            r = self._ease_out_sine(
-                progress, r, r2 - r, duration
-            )
-            g = self._ease_out_sine(
-                progress, g, g2 - g, duration
-            )
-            b = self._ease_out_sine(
-                progress, b, b2 - b, duration
-            )
-            color = (round(r), round(g), round(b))
+            color = self._ease_out_sine_color(node.colors[3], node.colors[-1])
 
         # Update size
         node.rect.width = node.rect.height = int(size)
@@ -322,6 +290,31 @@ class Animator:
                 border_radius=border_radius,
                 width=1
             )
+
+    def _ease_out_sine_color(
+        self,
+        time: float,
+        color_a: tuple[int, int, int],
+        color_b: tuple[int, int, int],
+        duration: float
+    ) -> tuple[int, int, int]:
+        """Calculate the current color
+
+        Args:
+            time (float): The current time of the animation.
+            color_a (tuple[int, int, int]): The starting color of the animation.
+            color_a (tuple[int, int, int]): The final color of the animation.
+            duration (float): The total duration of the animation in milliseconds.
+
+        Returns:
+            tuple[int, int, int]: Color at the current time.
+        """
+        return (
+            round(self._ease_out_sine(
+                progress, old, new - old, duration
+            ))
+            for old, new in zip(color_a, color_b)
+        )
 
     def _ease_out_sine(
         self,
