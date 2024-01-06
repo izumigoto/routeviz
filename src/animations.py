@@ -121,7 +121,7 @@ class Animator:
             self.need_update = False
 
         # Animate every node
-        for center in list(self.nodes_to_animate.keys()):
+        for center in self.nodes_to_animate:
             for i in range(len(self.nodes_to_animate[center]) - 1, -1, -1):
                 node = self.nodes_to_animate[center][i]
                 node.progress += pygame.time.get_ticks() - node.ticks
